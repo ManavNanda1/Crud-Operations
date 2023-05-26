@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5591f51e6d9c40a688b286d184e74d53" Name="Diagram1">
+        <EntityTypeShape EntityType="MN_ProjectModel.Country" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MN_ProjectModel.department" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MN_ProjectModel.state" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MN_ProjectModel.Users" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MN_ProjectModel.StudentsTab" Width="1.5" PointX="3" PointY="3.875" />
+        <AssociationConnector Association="MN_ProjectModel.FK__StudentsT__Count__6E01572D" />
+        <AssociationConnector Association="MN_ProjectModel.FK__StudentsT__State__6EF57B66" />
+        <EntityTypeShape EntityType="MN_ProjectModel.Options" Width="1.5" PointX="9.125" PointY="4.25" />
+        <EntityTypeShape EntityType="MN_ProjectModel.Question" Width="1.5" PointX="5.375" PointY="4" />
+        <AssociationConnector Association="MN_ProjectModel.FK__Options__Questio__02FC7413" />
+        <EntityTypeShape EntityType="MN_ProjectModel.Subjects" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="MN_ProjectModel.Teachers" Width="1.5" PointX="6" PointY="7.125" />
+        <AssociationConnector Association="MN_ProjectModel.FK__Teachers__Countr__08B54D69" />
+        <AssociationConnector Association="MN_ProjectModel.FK__Teachers__State__09A971A2" />
+        <EntityTypeShape EntityType="MN_ProjectModel.Quizes" Width="1.5" PointX="8.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

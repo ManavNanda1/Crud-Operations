@@ -1,0 +1,97 @@
+﻿@model List<PracProject.Model.Context.Quizes>
+
+@{
+    ViewBag.Title = "Quiz";
+    Layout = null;
+}
+<style>
+    .hide {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<div class="container mt-5 ">
+    <div style="border:2px solid black;border-radius:20px;min-height:100px" id="QuetionSection">
+        @if (Model != null)
+        {
+
+            for (int i = 0; i < Model.Count; i++)
+            {
+                if (i == 0)
+                {
+                    <div class="show question">
+                        <p>@Model[i].QuestionName</p>
+                        @Html.RadioButton("option", Model[i].Option1) @Model[i].Option1 <br />
+                        @Html.RadioButton("option", Model[i].Option2) @Model[i].Option2  <br />
+                        @Html.RadioButton("option", Model[i].Option3) @Model[i].Option3  <br />
+                        @Html.RadioButton("option", Model[i].Option4) @Model[i].Option4 <br />
+
+                    </div>
+
+                }
+                else
+                {
+                    <div class="hide question">
+                        <p>@Model[i].QuestionName</p>
+                        @Html.RadioButton("option", Model[i].Option1) @Model[i].Option1 <br />
+                        @Html.RadioButton("option", Model[i].Option2) @Model[i].Option2  <br />
+                        @Html.RadioButton("option", Model[i].Option3) @Model[i].Option3  <br />
+                        @Html.RadioButton("option", Model[i].Option4) @Model[i].Option4 <br />
+                    </div>
+                }
+
+
+
+            }
+
+            <div class="row text-center">
+                <div class="col-sm-6">
+                    <button class="btn btn-info" onclick="PrevQ()">Previous</button>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn btn-primary " onclick="NextQ()">Next</button>
+                </div>
+
+
+            </div>
+
+
+        }
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script>
+    function NextQ() {
+
+        var curquestion = document.querySelector(".show");
+        if (curquestion.nextElementSibling == null) {
+            alert("no more question");
+            return;
+        }
+        curquestion.classList.add("hide");
+        curquestion.classList.remove("show");
+        console.log($(curquestion).find("input:checked").val());
+
+        var nextq = curquestion.nextElementSibling;
+        nextq.classList.remove("hide");
+        nextq.classList.add("show");
+    }
+    function PrevQ() {
+        var curquestion = document.querySelector(".show");
+        if (curquestion.previousElementSibling == undefined) {
+            alert("no more question");
+            return;
+        }
+        curquestion.classList.add("hide");
+        curquestion.classList.remove("show");
+        var nextq = curquestion.previousElementSibling;
+        nextq.classList.remove("hide");
+        nextq.classList.add("show");
+    }
+</script>

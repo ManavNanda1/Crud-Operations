@@ -1,0 +1,590 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MN_ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="OptionID" />
+          </Key>
+          <Property Name="OptionID" Type="int" Nullable="false" />
+          <Property Name="QuestionID" Type="int" />
+          <Property Name="OptionText" Type="text" />
+          <Property Name="IsCorrect" Type="bit" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="QuestionText" Type="text" />
+          <Property Name="QuestionType" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Quizes">
+          <Key>
+            <PropertyRef Name="QuizId" />
+          </Key>
+          <Property Name="QuizId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionName" Type="varchar" MaxLength="250" />
+          <Property Name="Option1" Type="varchar" MaxLength="250" />
+          <Property Name="Option2" Type="varchar" MaxLength="250" />
+          <Property Name="Option3" Type="varchar" MaxLength="250" />
+          <Property Name="Option4" Type="varchar" MaxLength="250" />
+          <Property Name="Answer" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="260" />
+          <Property Name="CountryId" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentsTab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FName" Type="varchar" MaxLength="250" />
+          <Property Name="LName" Type="varchar" MaxLength="250" />
+          <Property Name="Email" Type="varchar" MaxLength="260" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Department" Type="varchar" MaxLength="250" />
+          <Property Name="Country" Type="int" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Subject" Type="varchar" MaxLength="250" />
+          <Property Name="Gender" Type="varchar" MaxLength="250" />
+          <Property Name="Country" Type="int" />
+          <Property Name="State" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="250" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="Password" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK__Options__Questio__02FC7413">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="Options" Type="Self.Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentsT__Count__75A278F5">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="StudentsTab" Type="Self.StudentsTab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StudentsTab">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentsT__State__76969D2E">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="StudentsTab" Type="Self.StudentsTab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StudentsTab">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__Countr__08B54D69">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__State__09A971A2">
+          <End Role="state" Type="Self.state" Multiplicity="0..1" />
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_getDept" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="empID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_Edit_Student" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Fname" Type="varchar" Mode="In" />
+          <Parameter Name="lname" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="Dob" Type="date" Mode="In" />
+          <Parameter Name="Dept" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="int" Mode="In" />
+          <Parameter Name="State" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_EditTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Subject" Type="varchar" Mode="In" />
+          <Parameter Name="Gender" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="int" Mode="In" />
+          <Parameter Name="State" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Sp_GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MN_ProjectModelStoreContainer">
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Options" EntityType="Self.Options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quizes" EntityType="Self.Quizes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state" EntityType="Self.state" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentsTab" EntityType="Self.StudentsTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Options__Questio__02FC7413" Association="Self.FK__Options__Questio__02FC7413">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentsT__Count__75A278F5" Association="Self.FK__StudentsT__Count__75A278F5">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="StudentsTab" EntitySet="StudentsTab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentsT__State__76969D2E" Association="Self.FK__StudentsT__State__76969D2E">
+            <End Role="state" EntitySet="state" />
+            <End Role="StudentsTab" EntitySet="StudentsTab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__Countr__08B54D69" Association="Self.FK__Teachers__Countr__08B54D69">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__State__09A971A2" Association="Self.FK__Teachers__State__09A971A2">
+            <End Role="state" EntitySet="state" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MN_ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="StudentsTab" Relationship="MN_ProjectModel.FK__StudentsT__Count__6E01572D" FromRole="Country" ToRole="StudentsTab" />
+          <NavigationProperty Name="Teachers" Relationship="MN_ProjectModel.FK__Teachers__Countr__08B54D69" FromRole="Country" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="CountryId" Type="Int32" />
+          <NavigationProperty Name="StudentsTab" Relationship="MN_ProjectModel.FK__StudentsT__State__6EF57B66" FromRole="state" ToRole="StudentsTab" />
+          <NavigationProperty Name="Teachers" Relationship="MN_ProjectModel.FK__Teachers__State__09A971A2" FromRole="state" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="MN_ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Country" EntityType="Self.Country" />
+          <EntitySet Name="department" EntityType="Self.department" />
+          <EntitySet Name="state" EntityType="Self.state" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="StudentsTab" EntityType="MN_ProjectModel.StudentsTab" />
+          <AssociationSet Name="FK__StudentsT__Count__6E01572D" Association="MN_ProjectModel.FK__StudentsT__Count__6E01572D">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="StudentsTab" EntitySet="StudentsTab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentsT__State__6EF57B66" Association="MN_ProjectModel.FK__StudentsT__State__6EF57B66">
+            <End Role="state" EntitySet="state" />
+            <End Role="StudentsTab" EntitySet="StudentsTab" />
+          </AssociationSet>
+          <FunctionImport Name="Sp_Edit_Student">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Fname" Mode="In" Type="String" />
+            <Parameter Name="lname" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="Dob" Mode="In" Type="DateTime" />
+            <Parameter Name="Dept" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="Int32" />
+            <Parameter Name="State" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_GetStudents" ReturnType="Collection(MN_ProjectModel.Sp_GetStudents_Result)" />
+          <EntitySet Name="Options" EntityType="MN_ProjectModel.Options" />
+          <EntitySet Name="Question" EntityType="MN_ProjectModel.Question" />
+          <AssociationSet Name="FK__Options__Questio__02FC7413" Association="MN_ProjectModel.FK__Options__Questio__02FC7413">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Options" EntitySet="Options" />
+          </AssociationSet>
+          <EntitySet Name="Subjects" EntityType="MN_ProjectModel.Subjects" />
+          <EntitySet Name="Teachers" EntityType="MN_ProjectModel.Teachers" />
+          <AssociationSet Name="FK__Teachers__Countr__08B54D69" Association="MN_ProjectModel.FK__Teachers__Countr__08B54D69">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Teachers__State__09A971A2" Association="MN_ProjectModel.FK__Teachers__State__09A971A2">
+            <End Role="state" EntitySet="state" />
+            <End Role="Teachers" EntitySet="Teachers" />
+          </AssociationSet>
+          <EntitySet Name="Quizes" EntityType="MN_ProjectModel.Quizes" />
+          <FunctionImport Name="Sp_EditTeacher">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Subject" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="Int32" />
+            <Parameter Name="State" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="StudentsTab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Department" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="Int32" />
+          <Property Name="State" Type="Int32" />
+          <NavigationProperty Name="Country1" Relationship="MN_ProjectModel.FK__StudentsT__Count__6E01572D" FromRole="StudentsTab" ToRole="Country" />
+          <NavigationProperty Name="state1" Relationship="MN_ProjectModel.FK__StudentsT__State__6EF57B66" FromRole="StudentsTab" ToRole="state" />
+        </EntityType>
+        <Association Name="FK__StudentsT__Count__6E01572D">
+          <End Type="MN_ProjectModel.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="MN_ProjectModel.StudentsTab" Role="StudentsTab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StudentsTab">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentsT__State__6EF57B66">
+          <End Type="MN_ProjectModel.state" Role="state" Multiplicity="0..1" />
+          <End Type="MN_ProjectModel.StudentsTab" Role="StudentsTab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="StudentsTab">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Sp_GetStudents_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="LName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="260" />
+          <Property Type="DateTime" Name="DOB" Nullable="true" />
+          <Property Type="String" Name="Department" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CountryName" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="StateName" Nullable="true" MaxLength="260" />
+          </ComplexType>
+        <EntityType Name="Options">
+          <Key>
+            <PropertyRef Name="OptionID" />
+          </Key>
+          <Property Name="OptionID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" />
+          <Property Name="OptionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsCorrect" Type="Boolean" />
+          <NavigationProperty Name="Question" Relationship="MN_ProjectModel.FK__Options__Questio__02FC7413" FromRole="Options" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QuestionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Options" Relationship="MN_ProjectModel.FK__Options__Questio__02FC7413" FromRole="Question" ToRole="Options" />
+        </EntityType>
+        <Association Name="FK__Options__Questio__02FC7413">
+          <End Type="MN_ProjectModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="MN_ProjectModel.Options" Role="Options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Options">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Subject" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="Int32" />
+          <Property Name="State" Type="Int32" />
+          <NavigationProperty Name="Country1" Relationship="MN_ProjectModel.FK__Teachers__Countr__08B54D69" FromRole="Teachers" ToRole="Country" />
+          <NavigationProperty Name="state1" Relationship="MN_ProjectModel.FK__Teachers__State__09A971A2" FromRole="Teachers" ToRole="state" />
+        </EntityType>
+        <Association Name="FK__Teachers__Countr__08B54D69">
+          <End Type="MN_ProjectModel.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="MN_ProjectModel.Teachers" Role="Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Teachers__State__09A971A2">
+          <End Type="MN_ProjectModel.state" Role="state" Multiplicity="0..1" />
+          <End Type="MN_ProjectModel.Teachers" Role="Teachers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Teachers">
+              <PropertyRef Name="State" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Quizes">
+          <Key>
+            <PropertyRef Name="QuizId" />
+          </Key>
+          <Property Name="QuizId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Option1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Option2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Option3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Option4" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Answer" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MN_ProjectModelStoreContainer" CdmEntityContainer="MN_ProjectEntities">
+          <EntitySetMapping Name="Country">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="department">
+            <EntityTypeMapping TypeName="MN_ProjectModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="state">
+            <EntityTypeMapping TypeName="MN_ProjectModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsTab">
+            <EntityTypeMapping TypeName="MN_ProjectModel.StudentsTab">
+              <MappingFragment StoreEntitySet="StudentsTab">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_Edit_Student" FunctionName="MN_ProjectModel.Store.Sp_Edit_Student" />
+          <FunctionImportMapping FunctionImportName="Sp_GetStudents" FunctionName="MN_ProjectModel.Store.Sp_GetStudents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MN_ProjectModel.Sp_GetStudents_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Options">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Options">
+              <MappingFragment StoreEntitySet="Options">
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="OptionText" ColumnName="OptionText" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="OptionID" ColumnName="OptionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+                <ScalarProperty Name="QuestionText" ColumnName="QuestionText" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quizes">
+            <EntityTypeMapping TypeName="MN_ProjectModel.Quizes">
+              <MappingFragment StoreEntitySet="Quizes">
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Option4" ColumnName="Option4" />
+                <ScalarProperty Name="Option3" ColumnName="Option3" />
+                <ScalarProperty Name="Option2" ColumnName="Option2" />
+                <ScalarProperty Name="Option1" ColumnName="Option1" />
+                <ScalarProperty Name="QuestionName" ColumnName="QuestionName" />
+                <ScalarProperty Name="QuizId" ColumnName="QuizId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_EditTeacher" FunctionName="MN_ProjectModel.Store.Sp_EditTeacher" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
